@@ -1,0 +1,11 @@
+# maven 项目的输出
+target/
+
+# idea 本身的配置文件
+.idea/
+*.iml
+
+# 日志，测试，编译后的类文件
+logs/
+*.log
+.class
