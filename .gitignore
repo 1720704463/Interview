@@ -8,4 +8,10 @@ target/
 # 日志，测试，编译后的类文件
 logs/
 *.log
+test/
 .class
+
+# 忽略 word 的临时文件
+~$_Java工程师_王凯_13939621143.docx
+
+阿里巴巴Java开发手册（纪念版）.pdf
