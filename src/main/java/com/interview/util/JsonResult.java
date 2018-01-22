@@ -1,4 +1,4 @@
-package com.interivew.util;
+package com.interview.util;
 
 import java.io.Serializable;
 
@@ -15,7 +15,7 @@ public final class JsonResult<T> implements Serializable {
    * ajax 发送的 json 请求的状态.
    * false 代表失败，true 代表成功，默认为 false
    */
-  private boolean success;
+  private Boolean success;
   /**
    * json 返回的一些消息，用得非常少.
    * 默认为 null，在使用 Gson 转换时默认会忽略
@@ -38,7 +38,7 @@ public final class JsonResult<T> implements Serializable {
    * @param message 消息
    * @param data    java 对象/集合数据
    */
-  private JsonResult(boolean success, String message, T data) {
+  private JsonResult(Boolean success, String message, T data) {
     this.success = success;
     this.message = message;
     this.data = data;
@@ -74,15 +74,15 @@ public final class JsonResult<T> implements Serializable {
    * @param data    需要返回的数据(json/xml/html)
    * @return 新的 JsonResult<T> 对象
    */
-  public static <T> JsonResult<T> getInstance(boolean success, String message, T data) {
+  public static <T> JsonResult<T> getInstance(Boolean success, String message, T data) {
     return new JsonResult<>(success, message, data);
   }
 
-  public boolean isSuccess() {
+  public Boolean isSuccess() {
     return success;
   }
 
-  public void setSuccess(boolean success) {
+  public void setSuccess(Boolean success) {
     this.success = success;
   }
 

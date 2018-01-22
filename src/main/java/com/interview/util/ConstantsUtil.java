@@ -1,4 +1,4 @@
-package com.interivew.util;
+package com.interview.util;
 
 /**
  * 静态状态类

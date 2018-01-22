@@ -1,4 +1,4 @@
-package com.interivew.util;
+package com.interview.util;
 
 import org.apache.commons.lang3.StringUtils;
 

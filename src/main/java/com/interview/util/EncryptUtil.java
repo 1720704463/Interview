@@ -1,4 +1,4 @@
-package com.interivew.util;
+package com.interview.util;
 
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -13,7 +13,7 @@ import org.apache.commons.codec.digest.DigestUtils;
  *
  * @author rxliuli
  */
-public class EncryptUtil {
+public final class EncryptUtil {
   /**
    * 私有化构造器
    */
