@@ -14,8 +14,8 @@
   <mvc:annotation-driven/>
   <context:component-scan base-package="com.interview.web"/>
   <!--扫描静态资源文件-->
-  <!--<mvc:default-servlet-handler/>-->
-  <!--<mvc:resources mapping="/statics/**" location="/statics/"/>-->
+  <mvc:default-servlet-handler/>
+  <mvc:resources mapping="/statics/**" location="/statics/"/>
 
   <!--完成视图的对应-->
   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
