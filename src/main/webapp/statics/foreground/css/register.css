@@ -1,0 +1,9 @@
+/*每个输入框的上下边距*/
+div.form-register .form-group {
+  margin-bottom: 0;
+}
+
+/*每个输入框下面的提示均为红色*/
+div.form-register .form-group span {
+  color: red;
+}
