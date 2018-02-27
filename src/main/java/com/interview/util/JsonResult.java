@@ -32,6 +32,12 @@ public final class JsonResult<T> implements Serializable {
   private T data;
 
   /**
+   * 空字段的构造函数
+   */
+  public JsonResult() {
+  }
+
+  /**
    * 全字段构造函数.
    *
    * @param success 状态
@@ -78,27 +84,30 @@ public final class JsonResult<T> implements Serializable {
     return new JsonResult<>(success, message, data);
   }
 
-  public Boolean isSuccess() {
+  public Boolean getSuccess() {
     return success;
   }
 
-  public void setSuccess(Boolean success) {
+  public JsonResult<T> setSuccess(Boolean success) {
     this.success = success;
+    return this;
   }
 
   public String getMessage() {
     return message;
   }
 
-  public void setMessage(String message) {
+  public JsonResult<T> setMessage(String message) {
     this.message = message;
+    return this;
   }
 
   public T getData() {
     return data;
   }
 
-  public void setData(T data) {
+  public JsonResult<T> setData(T data) {
     this.data = data;
+    return this;
   }
 }
