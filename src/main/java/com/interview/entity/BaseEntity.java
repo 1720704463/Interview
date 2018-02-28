@@ -19,6 +19,11 @@ import java.io.Serializable;
  * @author rxliuli
  */
 public class BaseEntity implements Serializable {
+  /**
+   * 实体类的版本
+   */
+  private static final long ENTITY_VERSION = 1L;
+
   @Override
   public String toString() {
     return ToStringBuilder.reflectionToString(this);
