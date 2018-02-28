@@ -1,10 +1,21 @@
 package com.interview.dao;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.interview.entity.TopicComment;
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
+import com.interview.entity.Topic;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author rxliuli
  */
-public interface TopicMapper extends BaseMapper<TopicComment> {
+public interface TopicMapper extends BaseMapper<Topic> {
+  /**
+   * 根据标题模糊查询面试题列表
+   *
+   * @param title 面试题标题
+   * @return 面试题列表
+   */
+  List<Topic> listByTitle(@Param("title") String title, Pagination page);
 }
