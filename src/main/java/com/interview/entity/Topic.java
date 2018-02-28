@@ -12,6 +12,24 @@ public class Topic extends BaseEntity {
   private String answer;
   private Timestamp updateTime;
 
+  public Topic() {
+  }
+
+  public Topic(Long typeId, String title, String answer, Timestamp updateTime) {
+    this.typeId = typeId;
+    this.title = title;
+    this.answer = answer;
+    this.updateTime = updateTime;
+  }
+
+  public Topic(Long id, Long typeId, String title, String answer, Timestamp updateTime) {
+    this.id = id;
+    this.typeId = typeId;
+    this.title = title;
+    this.answer = answer;
+    this.updateTime = updateTime;
+  }
+
   public Long getId() {
     return id;
   }
