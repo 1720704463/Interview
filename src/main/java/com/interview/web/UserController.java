@@ -102,4 +102,12 @@ public class UserController {
     session.setAttribute(ConstantsUtil.USER_SESSION, userLogin);
     return new JsonResult().setSuccess(boo);
   }
+
+  /**
+   * 跳转到用户提交面试题目页面
+   */
+  @RequestMapping(path = "/addTopic")
+  public String addTopic() {
+    return "foreground/submitTopic";
+  }
 }

@@ -4,11 +4,13 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.interview.entity.Topic;
 import com.interview.service.TopicService;
 import com.interview.util.JsonResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
 import java.util.Map;
 
 /**
@@ -41,5 +43,27 @@ public class CommonRestController {
     Page<Topic> topicPage = new Page<>(pageIndex, pageSize);
     Map<String, Object> map = topicService.listByParam(searchTopicTitle, topicPage);
     return JsonResult.getSuccess(map);
+  }
+
+  /**
+   * 添加新的面试题目
+   */
+  @RequestMapping(path = "/addTopicExecute")
+  public JsonResult<Topic> addTopicExecute(
+    @RequestParam(required = false) Long typeId,
+    @RequestParam(required = false) String title,
+    @RequestParam(required = false) String answer
+  ) {
+    //服务端判断参数是否合法
+    if (StringUtils.isAnyBlank(title, answer) || typeId == null) {
+      return JsonResult.getError("面试题目不能存在空值！");
+    }
+    //设置最后更新时间为当前时间
+    Topic topic = new Topic(typeId, title, answer, new Timestamp(System.currentTimeMillis()));
+    boolean boo = topicService.insert(topic);
+    if (!boo) {
+      return JsonResult.getError("面试题目添加失败！");
+    }
+    return JsonResult.getSuccess(topic);
   }
 }
