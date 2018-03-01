@@ -114,7 +114,7 @@ public class UserController {
   /**
    * 跳转到用户提交面试题目页面
    */
-  @RequestMapping(path = "/addTopic")
+  @RequestMapping(path = "/submitTopic")
   public String addTopic() {
     return "foreground/submitTopic";
   }

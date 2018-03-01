@@ -1,8 +1,11 @@
 package com.interview.web;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.interview.entity.Topic;
+import com.interview.entity.TopicType;
 import com.interview.service.TopicService;
+import com.interview.service.TopicTypeService;
 import com.interview.util.JsonResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +24,8 @@ import java.util.Map;
 public class CommonRestController {
   @Autowired
   private TopicService topicService;
+  @Autowired
+  private TopicTypeService topicTypeService;
 
   /**
    * 根据标题模糊分页查询面试题列表
@@ -48,7 +54,7 @@ public class CommonRestController {
   /**
    * 添加新的面试题目
    */
-  @RequestMapping(path = "/addTopicExecute")
+  @RequestMapping(path = "/submitTopicExecute")
   public JsonResult<Topic> addTopicExecute(
     @RequestParam(required = false) Long typeId,
     @RequestParam(required = false) String title,
@@ -65,5 +71,13 @@ public class CommonRestController {
       return JsonResult.getError("面试题目添加失败！");
     }
     return JsonResult.getSuccess(topic);
+  }
+
+  /**
+   * 获取所有的面试题目类型
+   */
+  @RequestMapping(path = "/getTopicTypeListExecute")
+  public JsonResult<List<TopicType>> getTopicTypeListExecute() {
+    return JsonResult.getSuccess(topicTypeService.selectList(new EntityWrapper<>()));
   }
 }
