@@ -39,7 +39,9 @@ public class UserAlreadyLoginInterceptor extends HandlerInterceptorAdapter {
     //判断 session 中是否存在当前用户对象,如果存在就跳转到首页
     if (userSession != null) {
       try {
-        response.sendRedirect(request.getContextPath() + "/user/home");
+        //获取上一个页面的路径(跳转到页面)
+        String referer = request.getHeader("Referer");
+        response.sendRedirect(referer);
       } catch (IOException e) {
         logger.info(e.getMessage());
       }
