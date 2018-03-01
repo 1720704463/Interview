@@ -78,7 +78,11 @@
 
       <bean class="com.interview.interceptor.UserAlreadyLoginInterceptor"/>
     </mvc:interceptor>
-
+    <!--用户访问路径日志记录拦截器(不启用,性能降低的很厉害)-->
+    <mvc:interceptor>
+      <mvc:mapping path="/user/**"/>
+      <bean class="com.interview.interceptor.UserLogInterceptor"/>
+    </mvc:interceptor>
   </mvc:interceptors>
 
 </beans>
