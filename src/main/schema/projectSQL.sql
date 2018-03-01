@@ -234,4 +234,24 @@ VALUES (
   now()
 );
 
+# 用户访问日志表
+DROP TABLE IF EXISTS user_log;
+CREATE TABLE user_log (
+  id          BIGINT PRIMARY KEY     NOT NULL
+  COMMENT '用户访问路径记录',
+  userLoginId BIGINT                 NULL
+  COMMENT '用户的 id',
+  path        VARCHAR(200)           NOT NULL
+  COMMENT '用户要访问的路径',
+  referer     VARCHAR(200)           NULL
+  COMMENT '用户访问的上一个页面',
+  ip          VARCHAR(30)            NOT NULL
+  COMMENT '用户的 ip',
+  dateTimeLog DATETIME               NOT NULL
+  COMMENT '用户访问的时间',
+  userAgent   VARCHAR(200)           NOT NULL
+  COMMENT '用户浏览器的版本号,类型'
+)
+  COMMENT '用户访问日志表';
+
 # endregion
