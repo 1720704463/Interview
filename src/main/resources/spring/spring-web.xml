@@ -58,4 +58,19 @@
     </mvc:message-converters>
   </mvc:annotation-driven>
 
+  <!--配置自定义的拦截器-->
+  <mvc:interceptors>
+    <!--用户未登录时的拦截器-->
+    <mvc:interceptor>
+      <!--首页-->
+      <mvc:mapping path="/user/home"/>
+      <!--添加面试题目-->
+      <mvc:mapping path="/user/addTopic"/>
+
+      <!--进行处理的拦截器-->
+      <bean class="com.interview.interceptor.UserLoginInterceptor"/>
+    </mvc:interceptor>
+
+  </mvc:interceptors>
+
 </beans>
