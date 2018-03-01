@@ -68,7 +68,15 @@
       <mvc:mapping path="/user/addTopic"/>
 
       <!--进行处理的拦截器-->
-      <bean class="com.interview.interceptor.UserLoginInterceptor"/>
+      <bean class="com.interview.interceptor.UserNoLoginInterceptor"/>
+    </mvc:interceptor>
+    <!--用户登录后的拦截器-->
+    <mvc:interceptor>
+      <!--用户登录/注册-->
+      <mvc:mapping path="/user/login"/>
+      <mvc:mapping path="/user/register"/>
+
+      <bean class="com.interview.interceptor.UserAlreadyLoginInterceptor"/>
     </mvc:interceptor>
 
   </mvc:interceptors>

@@ -17,11 +17,11 @@ import java.io.IOException;
  *
  * @author rxliuli
  */
-public class UserLoginInterceptor extends HandlerInterceptorAdapter {
+public class UserNoLoginInterceptor extends HandlerInterceptorAdapter {
   /**
    * 这个类的日志对象
    */
-  private static final Log logger = LogFactory.getLog(UserLoginInterceptor.class);
+  private static final Log logger = LogFactory.getLog(UserNoLoginInterceptor.class);
 
   /**
    * 重写拦截方法
