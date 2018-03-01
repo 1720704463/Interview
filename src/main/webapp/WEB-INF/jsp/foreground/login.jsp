@@ -23,7 +23,7 @@
 <body>
 <div class="container">
   <div class="card card-login mx-auto mt-5 form-login">
-    <h2 class="card-header text-white text-center">用户登录</h2>
+    <h2 class="card-header text-primary text-center">用户登录</h2>
     <div class="card-body">
       <form method="post" class="text-white">
         <div class="form-group">
@@ -46,7 +46,12 @@
           <div class="btn-group">
             <button type="reset" class="btn btn-primary">重置</button>
           </div>
-          <a href="" class="btn btn-primary">首页</a>
+          <div class="btn-group">
+            <a href="${pageContext.request.contextPath}/user/register" class="btn btn-primary">注册</a>
+          </div>
+          <div class="btn-group">
+            <a href="${pageContext.request.contextPath}/user/home" class="btn btn-primary">首页</a>
+          </div>
         </div>
       </form>
     </div>
