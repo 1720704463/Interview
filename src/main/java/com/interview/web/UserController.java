@@ -89,6 +89,14 @@ public class UserController {
   }
 
   /**
+   * 跳转到用户登录页面
+   */
+  @RequestMapping(path = "/register")
+  public String register() {
+    return "/foreground/register";
+  }
+
+  /**
    * 用户注册
    */
   @RequestMapping(path = "/registerExecute")
