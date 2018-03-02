@@ -64,8 +64,12 @@
     <mvc:interceptor>
       <!--首页-->
       <mvc:mapping path="/user/home"/>
-      <!--添加面试题目-->
+      <!--提交面试题目-->
       <mvc:mapping path="/user/addTopic"/>
+      <!--跳转到考试页面,获取考试题目列表,提交考试-->
+      <mvc:mapping path="/user/userTestPage"/>
+      <mvc:mapping path="/user/submitUserTest"/>
+      <mvc:mapping path="/user/addExamUserTest"/>
 
       <!--进行处理的拦截器-->
       <bean class="com.interview.interceptor.UserNoLoginInterceptor"/>
