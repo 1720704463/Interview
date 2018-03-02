@@ -39,6 +39,7 @@
         <textarea class="answerPrototype form-control" title="填写你的答案" rows="8"></textarea>
       </div>
     </div>
+
     <!--提交答案的按钮组-->
     <div class="btn-group btn-group-justified submitUserTest" style="margin-top: 20px;">
       <div class="btn-group">
@@ -52,6 +53,10 @@
       </div>
     </div>
   </form>
+  <div class="alert fade in" id="prompt" style="display: none;">
+    <a class="close" data-dismiss="alert" href="#">&times;</a>
+    <span></span>
+  </div>
 </main>
 </body>
 </html>
