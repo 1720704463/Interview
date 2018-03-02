@@ -17,9 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -56,6 +54,7 @@ public class UserController {
   @ResponseBody
   public JsonResult<UserLogin> loginExecute(
     UserLogin userLogin,
+    Boolean remember,
     HttpSession session,
     HttpServletRequest request,
     HttpServletResponse response
@@ -64,22 +63,42 @@ public class UserController {
     if (result == null) {
       return JsonResult.getError("用户名或密码错误");
     }
-    //将用户名和密码加密存入到 cookie 中
-    String key = DesCodec.initKey();
-    //将秘钥存入到
-    boolean userKeyBoo = userKeyService.insertOrUpdate(new UserKey(result.getId(), key));
-    //只加密密码而不加密用户 id,以此找到用户的秘钥然后对密码进行解密
-    String encryptPassword = DesCodec.encrypt(result.getPassword(), key);
-    Cookie cookie = new Cookie(
-      ConstantsUtil.INTERVIEW_USER_COOKIE,
-      result.getId() + "|" + encryptPassword
-    );
-    //设置有效时间是 1 年
-    cookie.setMaxAge(60 * 60 * 24 * 365);
-    cookie.setPath("/");
-    response.addCookie(cookie);
-    //也存到 session 中
+    //存入到 session 中
     session.setAttribute(ConstantsUtil.USER_SESSION, result);
+    //判断用户是否选中记住密码
+    if (!remember) {
+      //如果用户没有记住密码则清除本地 cookie(如果有的话)
+      Cookie[] cookies = request.getCookies();
+      //查询数组中是否有指定名称的 cookie
+      Optional<Cookie> cookieOptional = Arrays.stream(cookies)
+        .filter(cookie ->
+          StringUtils.equals(cookie.getName(), ConstantsUtil.INTERVIEW_USER_COOKIE)
+            && cookie.getValue() != null
+        )
+        .findFirst();
+      //如果在 cookie 中不存在的话就直接返回
+      if (cookieOptional.isPresent()) {
+        Cookie cookie = cookieOptional.get();
+        //设置 cookie 的有效周期为 0 然后覆盖掉原本的,也算是变相删除了
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+      }
+    } else {
+      //将用户名和密码加密存入到 cookie 中
+      String key = DesCodec.initKey();
+      //将秘钥添加/更新到数据库
+      boolean userKeyBoo = userKeyService.insertOrUpdate(new UserKey(result.getId(), key));
+      //只加密密码而不加密用户 id,以此找到用户的秘钥然后对密码进行解密
+      String encryptPassword = DesCodec.encrypt(result.getPassword(), key);
+      Cookie cookie = new Cookie(
+        ConstantsUtil.INTERVIEW_USER_COOKIE,
+        result.getId() + "|" + encryptPassword
+      );
+      //设置有效时间是 1 年
+      cookie.setMaxAge(60 * 60 * 24 * 365);
+      cookie.setPath("/");
+      response.addCookie(cookie);
+    }
     return JsonResult.getSuccess(result);
   }
 

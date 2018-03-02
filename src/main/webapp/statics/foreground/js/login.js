@@ -9,6 +9,7 @@ $(function () {
     //获得登陆名和密码
     var username = $("#username").val();
     var password = $("#password").val();
+    var remember = $("#remember").is(":checked");
 
     //非空校验
     if (username.trim() === ''
@@ -18,13 +19,13 @@ $(function () {
     }
 
     //进行 ajax 验证
-    $.ajax({
+    $.post({
       url: "/user/loginExecute",
-      type: "POST",
       dataType: "json",
       data: {
         username: username,
-        password: password
+        password: password,
+        remember: remember
       },
       success: function (json) {
         var success = json.success;

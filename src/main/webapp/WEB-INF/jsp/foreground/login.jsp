@@ -36,7 +36,7 @@
         </div>
         <div class="check-box">
           <label class="text-white">
-            <input type="checkbox" value="remember" name="remember"/>记住密码
+            <input type="checkbox" value="remember" name="remember" id="remember"/>记住密码
           </label>
         </div>
         <div class="btn-group btn-group-justified">
