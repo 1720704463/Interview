@@ -76,9 +76,8 @@ public final class GsonUtil {
    * @param <T>  泛型参数
    * @return 转换得到的 {@code List<T>} 泛型集合
    */
-  public static <T> List<T> gsonToList(String json) {
-    return GSON.fromJson(json, new TypeToken<List<T>>() {
-    }.getType());
+  public static <T> List<T> gsonToList(String json, TypeToken<List<T>> typeToken) {
+    return GSON.fromJson(json, typeToken.getType());
   }
 
   /**
@@ -88,9 +87,8 @@ public final class GsonUtil {
    * @param <T>  泛型参数
    * @return 转换得到的 {@code List<Map<String, T>>} 泛型集合
    */
-  public static <T> List<Map<String, T>> gsonToMapList(String json) {
-    return GSON.fromJson(json, new TypeToken<List<Map<String, T>>>() {
-    }.getType());
+  public static <T> List<Map<String, T>> gsonToMapList(String json, TypeToken<List<Map<String, T>>> typeToken) {
+    return GSON.fromJson(json, typeToken.getType());
   }
 
   /**
@@ -100,8 +98,7 @@ public final class GsonUtil {
    * @param <T>  泛型参数
    * @return 转换得到的 {@code Map<String, T>} 泛型集合
    */
-  public static <T> Map<String, T> gsonToMap(String json) {
-    return GSON.fromJson(json, new TypeToken<Map<String, T>>() {
-    }.getType());
+  public static <T> Map<String, T> gsonToMap(String json, TypeToken<Map<String, T>> typeToken) {
+    return GSON.fromJson(json, typeToken.getType());
   }
 }
