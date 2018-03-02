@@ -41,7 +41,7 @@ public class UserAlreadyLoginInterceptor extends HandlerInterceptorAdapter {
       try {
         //获取上一个页面的路径(跳转到页面)
         String referer = request.getHeader("Referer");
-        response.sendRedirect(referer);
+        response.sendRedirect(referer == null ? "/user/home" : referer);
       } catch (IOException e) {
         logger.info(e.getMessage());
       }
