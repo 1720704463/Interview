@@ -81,14 +81,4 @@ public class CommonRestController {
     return JsonResult.getSuccess(topicTypeService.selectList(new EntityWrapper<>()));
   }
 
-  /**
-   * 随机获取指定数量的面试题目列表
-   */
-  @RequestMapping(path = "/getTopicRandom")
-  public JsonResult<List<Topic>> getTopicRandom(
-    @RequestParam(required = false) Integer topicNumber
-  ) {
-    List<Topic> topicList = topicService.listByRandom(topicNumber);
-    return JsonResult.getSuccess(topicList);
-  }
 }
