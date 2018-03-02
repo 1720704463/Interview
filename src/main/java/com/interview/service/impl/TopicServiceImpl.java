@@ -46,4 +46,9 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
       .add("topicTypeList", topicTypeResult)
       .getMap();
   }
+
+  @Override
+  public List<Topic> listByRandom(Integer topicNumber) {
+    return baseMapper.listByRandom(topicNumber);
+  }
 }

@@ -9,4 +9,14 @@
       AND title LIKE concat('%', #{title}, '%')
     </if>
   </select>
+  <!--此处的 order by rand() 正是为了获取随机的题目，排序规则为随机的话，前面指定数量的题目也就算是随机的了-->
+  <select id="listByRandom" resultType="com.interview.entity.Topic">
+    SELECT
+      id,
+      typeId,
+      title
+    FROM topic
+    ORDER BY rand()
+    LIMIT #{topicNumber}
+  </select>
 </mapper>

@@ -118,4 +118,12 @@ public class UserController {
   public String addTopic() {
     return "foreground/submitTopic";
   }
+
+  /**
+   * 跳转到用户面试题目测验页面
+   */
+  @RequestMapping(path = "/userTestPage")
+  public String userTestPage() {
+    return "foreground/userTestPage";
+  }
 }

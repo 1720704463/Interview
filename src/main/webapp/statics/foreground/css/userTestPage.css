@@ -1,0 +1,9 @@
+/*灰色的背景颜色,用于在做过题目后标识对应的选项卡*/
+.bg-whitesmoke {
+  background-color: whitesmoke !important;
+}
+
+/*提交测验的按钮组与上方输入框的距离*/
+/*#commitUserTest {
+  margin-top: 30px !important;
+}*/
