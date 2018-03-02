@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -35,6 +38,8 @@ public class UserController {
   private ResultService resultService;
   @Autowired
   private ExamTopicService examTopicService;
+  @Autowired
+  private UserKeyService userKeyService;
 
   /**
    * 跳转到登陆
@@ -51,11 +56,29 @@ public class UserController {
   @ResponseBody
   public JsonResult<UserLogin> loginExecute(
     UserLogin userLogin,
-    HttpSession session) {
+    HttpSession session,
+    HttpServletRequest request,
+    HttpServletResponse response
+  ) throws Exception {
     UserLogin result = userLoginService.getByUserLogin(userLogin);
     if (result == null) {
       return JsonResult.getError("用户名或密码错误");
     }
+    //将用户名和密码加密存入到 cookie 中
+    String key = DesCodec.initKey();
+    //将秘钥存入到
+    boolean userKeyBoo = userKeyService.insertOrUpdate(new UserKey(result.getId(), key));
+    //只加密密码而不加密用户 id,以此找到用户的秘钥然后对密码进行解密
+    String encryptPassword = DesCodec.encrypt(result.getPassword(), key);
+    Cookie cookie = new Cookie(
+      ConstantsUtil.INTERVIEW_USER_COOKIE,
+      result.getId() + "|" + encryptPassword
+    );
+    //设置有效时间是 1 年
+    cookie.setMaxAge(60 * 60 * 24 * 365);
+    cookie.setPath("/");
+    response.addCookie(cookie);
+    //也存到 session 中
     session.setAttribute(ConstantsUtil.USER_SESSION, result);
     return JsonResult.getSuccess(result);
   }
