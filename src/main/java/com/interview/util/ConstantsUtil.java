@@ -16,6 +16,8 @@ public final class ConstantsUtil {
    */
   public static final String ADMIN_SESSION = "adminSession";
 
+  public static final String INTERVIEW_USER_COOKIE = "interviewUserCookie";
+
   private ConstantsUtil() {
   }
 
