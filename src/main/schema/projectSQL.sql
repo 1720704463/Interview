@@ -135,7 +135,7 @@ VALUES (
 # 考试信息
 CREATE TABLE result (
   id          BIGINT PRIMARY KEY NOT NULL
-  COMMENT '考试编号',
+  COMMENT '考试结果编号',
   userLoginId BIGINT             NOT NULL
   COMMENT '用户编号,外键关联 user_login 表',
   examId      BIGINT             NOT NULL
@@ -253,5 +253,14 @@ CREATE TABLE user_log (
   COMMENT '用户浏览器的版本号,类型'
 )
   COMMENT '用户访问日志表';
+
+# 用户秘钥表,主要保存用户当前的用户名和密码的解码秘钥(在用户登录时则进行更新)
+CREATE TABLE user_key (
+  id      BIGINT   NOT NULL
+  COMMENT '用户的 id,即是主键,又关联到用户登录表',
+  userKey CHAR(12) NOT NULL
+  COMMENT '用户的秘钥'
+)
+  COMMENT '用户秘钥表';
 
 # endregion
