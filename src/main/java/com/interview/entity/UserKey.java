@@ -1,9 +1,12 @@
 package com.interview.entity;
 
 
+import com.baomidou.mybatisplus.annotations.TableName;
+
 /**
  * @author rxliuli
  */
+@TableName(value = "user_key")
 public class UserKey extends BaseEntity {
   private Long id;
   private String userKey;
