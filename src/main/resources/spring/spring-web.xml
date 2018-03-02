@@ -60,6 +60,29 @@
 
   <!--配置自定义的拦截器-->
   <mvc:interceptors>
+    <!--
+      用户访问路径日志记录拦截器
+      附: 性能上会降低一些
+    -->
+    <mvc:interceptor>
+      <mvc:mapping path="/user/**"/>
+      <bean class="com.interview.interceptor.UserLogInterceptor"/>
+    </mvc:interceptor>
+
+    <!--
+      用户 cookie 自动登录的拦截器
+      主要是用于实现用户的自动登录功能,不用每次关闭浏览器之后再打开就要重新登录了.
+      因为需要在 session 中找不到用户的时候从 cookie 中查找,所以需要放置到其他用户拦截器的上面,
+      不管结果如何,都会继续执行到下一个拦截器.
+    -->
+    <mvc:interceptor>
+      <!--用户的全部操作,都必须经过这个拦截器-->
+      <mvc:mapping path="/user/*"/>
+
+      <!--使用那个拦截器-->
+      <bean class="com.interview.interceptor.UserSessionInterceptor"/>
+    </mvc:interceptor>
+
     <!--用户未登录时的拦截器-->
     <mvc:interceptor>
       <!--首页-->
@@ -81,11 +104,6 @@
       <mvc:mapping path="/user/register"/>
 
       <bean class="com.interview.interceptor.UserAlreadyLoginInterceptor"/>
-    </mvc:interceptor>
-    <!--用户访问路径日志记录拦截器(不启用,性能降低的很厉害)-->
-    <mvc:interceptor>
-      <mvc:mapping path="/user/**"/>
-      <bean class="com.interview.interceptor.UserLogInterceptor"/>
     </mvc:interceptor>
   </mvc:interceptors>
 
