@@ -1,10 +1,10 @@
 package com.interview.dao;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.interview.entity.TopicComment;
+import com.interview.entity.Exam;
 
 /**
  * @author rxliuli
  */
-public interface ExamMapper extends BaseMapper<TopicComment> {
+public interface ExamMapper extends BaseMapper<Exam> {
 }
