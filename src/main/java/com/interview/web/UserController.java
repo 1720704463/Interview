@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import com.interview.entity.*;
 import com.interview.service.*;
 import com.interview.util.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -156,6 +157,16 @@ public class UserController {
     UserLogin userLogin = (UserLogin) session.getAttribute(ConstantsUtil.USER_SESSION);
     //根据编号查询考试
     Exam exam = examService.selectOne(new EntityWrapper<Exam>().eq("id", examId));
+    //获取原本考试的面试题目列表(谨防用户直接修改考试题目)
+    String topicIdsOld = exam.getTopicIds();
+    //获取提交过来的面试题目编号
+    String topicIdsNew = topicList.stream()
+      .map(topic -> topic.getId().toString())
+      .collect(Collectors.joining("\n"));
+    if (!StringUtils.equals(topicIdsOld, topicIdsNew)) {
+      return JsonResult.getError("面试题目列表已被修改,请刷新页面重试!");
+    }
+
     Result result = new Result(
       userLogin.getId(),
       examId,
