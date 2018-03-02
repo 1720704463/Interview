@@ -12,6 +12,16 @@ public class Exam extends BaseEntity {
   private Timestamp endTime;
   private String topicIds;
 
+  public Exam() {
+  }
+
+  public Exam(String title, Timestamp startTime, Timestamp endTime, String topicIds) {
+    this.title = title;
+    this.startTime = startTime;
+    this.endTime = endTime;
+    this.topicIds = topicIds;
+  }
+
   public Long getId() {
     return id;
   }
