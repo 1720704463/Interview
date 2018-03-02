@@ -255,11 +255,13 @@ CREATE TABLE user_log (
   COMMENT '用户访问日志表';
 
 # 用户秘钥表,主要保存用户当前的用户名和密码的解码秘钥(在用户登录时则进行更新)
+DROP TABLE IF EXISTS user_key;
 CREATE TABLE user_key (
   id      BIGINT   NOT NULL
   COMMENT '用户的 id,即是主键,又关联到用户登录表',
   userKey CHAR(12) NOT NULL
-  COMMENT '用户的秘钥'
+  COMMENT '用户的秘钥',
+  FOREIGN KEY (id) REFERENCES user_login (id)
 )
   COMMENT '用户秘钥表';
 
