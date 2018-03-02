@@ -13,6 +13,16 @@ public class ExamTopic extends BaseEntity {
   private Double topicScore;
   private String content;
 
+  public ExamTopic() {
+  }
+
+  public ExamTopic(Long resultId, Long topicId, Double topicScore, String content) {
+    this.resultId = resultId;
+    this.topicId = topicId;
+    this.topicScore = topicScore;
+    this.content = content;
+  }
+
   public Long getId() {
     return id;
   }

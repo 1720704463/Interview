@@ -13,6 +13,17 @@ public class Result extends BaseEntity {
   private Timestamp startTime;
   private Timestamp endTime;
 
+  public Result() {
+  }
+
+  public Result(Long userLoginId, Long examId, Double examScore, Timestamp startTime, Timestamp endTime) {
+    this.userLoginId = userLoginId;
+    this.examId = examId;
+    this.examScore = examScore;
+    this.startTime = startTime;
+    this.endTime = endTime;
+  }
+
   public Long getId() {
     return id;
   }
