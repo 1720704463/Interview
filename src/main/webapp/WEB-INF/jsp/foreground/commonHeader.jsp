@@ -46,6 +46,7 @@
           <ul class="dropdown-menu">
             <li><a href="${pageContext.request.contextPath}/user/home">查询全部</a></li>
             <li><a href="#">分类查询</a></li>
+            <li><a href="${pageContext.request.contextPath}/user/submitTopic">提交题目</a></li>
           </ul>
         </li>
       </ul>
