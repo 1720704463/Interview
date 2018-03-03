@@ -36,6 +36,9 @@ public class UserSessionInterceptor extends HandlerInterceptorAdapter {
     }
     //否则就去 cookie 里面查询
     Cookie[] cookies = request.getCookies();
+    if (cookies == null || cookies.length == 0) {
+      return true;
+    }
     //查询数组中是否有指定名称的 cookie
     Optional<Cookie> cookieOptional = Arrays.stream(cookies)
       .filter(cookie ->
