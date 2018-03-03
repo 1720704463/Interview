@@ -32,7 +32,7 @@ CREATE TABLE user_info (
   COMMENT '用户昵称',
   realname VARCHAR(20)
   COMMENT '用户真实姓名(可以为空)',
-  picture  VARCHAR(200)         NOT NULL
+  picture  VARCHAR(200)        NOT NULL
   COMMENT '用户头像(不能为空但在程序中会赋予默认值)',
   birthday DATE
   COMMENT '用户生日(可以为空)',
@@ -257,12 +257,22 @@ CREATE TABLE user_log (
 # 用户秘钥表,主要保存用户当前的用户名和密码的解码秘钥(在用户登录时则进行更新)
 DROP TABLE IF EXISTS user_key;
 CREATE TABLE user_key (
-  id      BIGINT   NOT NULL
+  id      BIGINT   NOT NULL PRIMARY KEY
   COMMENT '用户的 id,即是主键,又关联到用户登录表',
   userKey CHAR(12) NOT NULL
   COMMENT '用户的秘钥',
   FOREIGN KEY (id) REFERENCES user_login (id)
 )
   COMMENT '用户秘钥表';
+
+# 用户默认头像表
+USE interview;
+CREATE TABLE user_picture (
+  id      BIGINT       NOT NULL PRIMARY KEY
+  COMMENT '用户默认头像的 id',
+  picture VARCHAR(200) NOT NULL
+  COMMENT '用户默认头像的路径'
+)
+  COMMENT '用户默认头像表';
 
 # endregion
