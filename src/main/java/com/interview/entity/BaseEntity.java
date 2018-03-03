@@ -22,7 +22,7 @@ public class BaseEntity implements Serializable {
   /**
    * 实体类的版本
    */
-  private static final long ENTITY_VERSION = 2L;
+  private static final long ENTITY_VERSION = 3L;
 
   @Override
   public String toString() {
