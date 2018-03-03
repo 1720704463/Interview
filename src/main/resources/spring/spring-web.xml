@@ -88,7 +88,8 @@
       <!--首页-->
       <mvc:mapping path="/user/home"/>
       <!--提交面试题目-->
-      <mvc:mapping path="/user/addTopic"/>
+      <mvc:mapping path="/user/submitTopic"/>
+      <mvc:mapping path="/submitTopicExecute"/>
       <!--跳转到考试页面,获取考试题目列表,提交考试-->
       <mvc:mapping path="/user/userTestPage"/>
       <mvc:mapping path="/user/submitUserTest"/>
