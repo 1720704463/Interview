@@ -43,6 +43,8 @@ public class UserController {
   private UserKeyService userKeyService;
   @Autowired
   private UserInfoService userInfoService;
+  @Autowired
+  private UserPictureService userPictureService;
 
   /**
    * 跳转到登陆
@@ -177,11 +179,13 @@ public class UserController {
       return JsonResult.getError("注册失败!");
     }
     //添加一个用户注册表中的
-    UserInfo userInfo = new UserInfo(userLogin.getId(), userLogin.getUsername(), null);
+    UserInfo userInfo = new UserInfo(userLogin.getId(), userLogin.getUsername(), userPictureService.findByRandom().getPicture());
     boolean userInfoBoo = userInfoService.insert(userInfo);
     if (!userInfoBoo) {
       return JsonResult.getError("注册失败!");
     }
+    //存入到 session 中
+    session.setAttribute(ConstantsUtil.USER_SESSION, userLogin);
     return JsonResult.getSuccess(null);
   }
 
