@@ -17,7 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -38,6 +41,8 @@ public class UserController {
   private ExamTopicService examTopicService;
   @Autowired
   private UserKeyService userKeyService;
+  @Autowired
+  private UserInfoService userInfoService;
 
   /**
    * 跳转到登陆
@@ -67,22 +72,7 @@ public class UserController {
     session.setAttribute(ConstantsUtil.USER_SESSION, result);
     //判断用户是否选中记住密码
     if (!remember) {
-      //如果用户没有记住密码则清除本地 cookie(如果有的话)
-      Cookie[] cookies = request.getCookies();
-      //查询数组中是否有指定名称的 cookie
-      Optional<Cookie> cookieOptional = Arrays.stream(cookies)
-        .filter(cookie ->
-          StringUtils.equals(cookie.getName(), ConstantsUtil.INTERVIEW_USER_COOKIE)
-            && cookie.getValue() != null
-        )
-        .findFirst();
-      //如果在 cookie 中不存在的话就直接返回
-      if (cookieOptional.isPresent()) {
-        Cookie cookie = cookieOptional.get();
-        //设置 cookie 的有效周期为 0 然后覆盖掉原本的,也算是变相删除了
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
-      }
+      removeUserCookie(request, response);
     } else {
       //将用户名和密码加密存入到 cookie 中
       String key = DesCodec.initKey();
@@ -100,6 +90,26 @@ public class UserController {
       response.addCookie(cookie);
     }
     return JsonResult.getSuccess(result);
+  }
+
+  /**
+   * 清除用户当前的 cookie(如果有的话)
+   */
+  private void removeUserCookie(HttpServletRequest request, HttpServletResponse response) {
+    //如果用户没有记住密码则清除本地 cookie(如果有的话)
+    Cookie[] cookies = request.getCookies();
+    Arrays.stream(cookies)
+      .filter(cookie ->
+        StringUtils.equals(cookie.getName(), ConstantsUtil.INTERVIEW_USER_COOKIE)
+          && cookie.getValue() != null
+      )
+      .forEach(cookie -> {
+        //设置 cookie 的有效周期为 0 然后覆盖掉原本的,也算是变相删除了
+        cookie.setValue(null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+      });
   }
 
   /**
@@ -162,9 +172,17 @@ public class UserController {
     HttpSession session
   ) {
     userLogin.setPassword(EncryptUtil.sha512Hex(userLogin.getPassword()));
-    boolean boo = userLoginService.insert(userLogin);
-    session.setAttribute(ConstantsUtil.USER_SESSION, userLogin);
-    return new JsonResult().setSuccess(boo);
+    boolean userLoginBoo = userLoginService.insert(userLogin);
+    if (!userLoginBoo) {
+      return JsonResult.getError("注册失败!");
+    }
+    //添加一个用户注册表中的
+    UserInfo userInfo = new UserInfo(userLogin.getId(), userLogin.getUsername(), null);
+    boolean userInfoBoo = userInfoService.insert(userInfo);
+    if (!userInfoBoo) {
+      return JsonResult.getError("注册失败!");
+    }
+    return JsonResult.getSuccess(null);
   }
 
   /**
@@ -260,5 +278,37 @@ public class UserController {
     map.put("topicList", topicList);
     map.put("examId", exam.getId());
     return JsonResult.getSuccess(map);
+  }
+
+  /**
+   * 判断用户是否登录
+   */
+  @RequestMapping(path = "/userWhetherLogin")
+  @ResponseBody
+  public JsonResult<UserInfo> userWhetherLogin(
+    HttpSession session
+  ) {
+    //查询当前 session 中是否有用户信息
+    UserLogin userLogin = (UserLogin) session.getAttribute(ConstantsUtil.USER_SESSION);
+    if (userLogin == null) {
+      return JsonResult.getError("用户还没有登录");
+    }
+    //查询用户的详细信息
+    UserInfo userInfo = userInfoService.selectById(userLogin.getId());
+    return JsonResult.getSuccess(userInfo);
+  }
+
+  /**
+   * 注销登陆
+   */
+  @RequestMapping(path = "/logout")
+  public String logout(
+    HttpServletRequest request,
+    HttpServletResponse response,
+    HttpSession session
+  ) {
+    removeUserCookie(request, response);
+    session.removeAttribute(ConstantsUtil.USER_SESSION);
+    return "redirect:/user/home";
   }
 }

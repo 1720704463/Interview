@@ -1,0 +1,17 @@
+/*
+  为了防止固定导航栏与下面的整体内容重叠,所以需要添加一些内边距
+  bootstrap 的导航栏默认是 50px
+*/
+body {
+  padding-top: 50px;
+}
+
+/*用户头像*/
+#userAlreadyLogin .userPictureImage {
+  padding: 10px;
+}
+
+#userAlreadyLogin .userPictureImage img {
+  width: 30px;
+  height: 30px;
+}
