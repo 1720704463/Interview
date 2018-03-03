@@ -48,9 +48,6 @@
       <div class="btn-group">
         <button type="reset" class="btn btn-primary">重置</button>
       </div>
-      <div class="btn-group">
-        <a href="${pageContext.request.contextPath}/user/home" class="btn btn-primary">首页</a>
-      </div>
     </div>
   </form>
   <br/>
