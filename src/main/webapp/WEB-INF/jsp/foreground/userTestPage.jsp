@@ -18,7 +18,6 @@
   <script src="${pageContext.request.contextPath}/statics/commons/js/jquery.min.js"></script>
   <script src="${pageContext.request.contextPath}/statics/commons/js/bootstrap.min.js"></script>
 
-  <link href="${pageContext.request.contextPath}/statics/foreground/css/userTestPage.css" rel="stylesheet">
   <script src="${pageContext.request.contextPath}/statics/foreground/js/userTestPage.js"></script>
 </head>
 <body>
@@ -26,15 +25,15 @@
 <jsp:include page="commonHeader.jsp"/>
 <main class="container">
   <h2 class="text-primary text-center">用户测验页面</h2>
+  <p id="testRemainingTime" class="text-warning"></p>
   <form action="" method="post">
-    <!--面试题目标题-->
+    <!--面试题目序号列表-->
     <ul id="idList" class="nav nav-pills">
       <li class="idProtoType" style="display: none;">
         <a href="#idProtoType" data-toggle="tab">第 1 题</a>
       </li>
-
     </ul>
-    <!--面试题目答案,由用户负责完成-->
+    <!--面试题目标题答案列表,由用户负责完成-->
     <div id="topicList" class="tab-content">
       <div class="tab-pane fade in topicPrototype" id="idProtoType" style="display: none;">
         <h4 class="titlePrototype">原型题目标题</h4>

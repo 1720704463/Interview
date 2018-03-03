@@ -2,12 +2,14 @@
  * @author rxliuli
  */
 $(function () {
-  var examId;
+  //当前考试的信息
+  var exam;
+
   /**
    * 页面一加载就随机获取 20 道面试题目
    */
   $.get({
-    url: "/user/addExamUserTest",
+    url: rootContextPath + "/user/addExamUserTest",
     dataType: "json",
     data: {
       topicNumber: 20
@@ -16,7 +18,7 @@ $(function () {
       if (json.success) {
         var $idList = $("#idList");
         var $topicList = $("#topicList");
-        examId = json.data.examId;
+        exam = json.data.exam;
         $(json.data.topicList).each(function (index, topic) {
           //选项卡
           var $idClone = $idList.find(".idProtoType").clone(true);
@@ -46,6 +48,28 @@ $(function () {
         //默认显示第一个
         $idList.find(".id:eq(0)").addClass("active");
         $topicList.find(".topic:eq(0)").addClass("active");
+
+        //设置一下用户的考试时间提醒
+        castTestRemainingTime();
+        setInterval(function () {
+          castTestRemainingTime();
+        }, 1000);
+
+        /**
+         * 计算剩余的考试时间
+         */
+        function castTestRemainingTime() {
+          var nowDate = new Date();
+          var endDate = new Date(Date.parse(exam.endTime));
+          var differenceDate = new Date(endDate.getTime() - nowDate.getTime());
+          $("#testRemainingTime").text(
+            "考试时间还剩余: "
+            + differenceDate.getMinutes()
+            + " 分 "
+            + differenceDate.getSeconds()
+            + " 秒 "
+          );
+        }
       }
     },
     error: function (json) {
@@ -53,6 +77,22 @@ $(function () {
     }
   });
 
+  /**
+   * 每填写一个面试题目就改变题目选项卡的颜色进行标识
+   */
+  $("body").on("input", ".answer", function () {
+    var index = $(this).parents(".topic").index();
+    //rxliuliError: 这里的下标貌似有些问题?
+    if ($(this).val().trim() === '') {
+      $("#idList").find(".id").eq(index).removeClass("bg-info")
+    } else {
+      $("#idList").find(".id").eq(index - 1).addClass("bg-info")
+    }
+  });
+
+  /**
+   * 用户点击提交按钮
+   */
   $(".submitUserTest :submit").click(function () {
     /**
      * 创建一个原型
@@ -76,7 +116,7 @@ $(function () {
       dataType: "json",
       data: {
         topicListString: JSON.stringify(topicList),
-        examId: examId
+        examId: exam.id
       },
       success: function (json) {
         //判断是否提交成功
