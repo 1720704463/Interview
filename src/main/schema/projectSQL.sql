@@ -32,7 +32,7 @@ CREATE TABLE user_info (
   COMMENT '用户昵称',
   realname VARCHAR(20)
   COMMENT '用户真实姓名(可以为空)',
-  picture  VARCHAR(20)         NOT NULL
+  picture  VARCHAR(200)         NOT NULL
   COMMENT '用户头像(不能为空但在程序中会赋予默认值)',
   birthday DATE
   COMMENT '用户生日(可以为空)',
