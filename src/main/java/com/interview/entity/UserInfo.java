@@ -17,6 +17,15 @@ public class UserInfo extends BaseEntity {
   private Integer gender;
   private String address;
 
+  public UserInfo() {
+  }
+
+  public UserInfo(Long id, String nickname, String picture) {
+    this.id = id;
+    this.nickname = nickname;
+    this.picture = picture;
+  }
+
   public Long getId() {
     return id;
   }
