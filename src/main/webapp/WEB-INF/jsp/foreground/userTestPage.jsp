@@ -22,6 +22,8 @@
   <script src="${pageContext.request.contextPath}/statics/foreground/js/userTestPage.js"></script>
 </head>
 <body>
+<%--引入公用的头部--%>
+<jsp:include page="commonHeader.jsp"/>
 <main class="container">
   <h2 class="text-primary text-center">用户测验页面</h2>
   <form action="" method="post">

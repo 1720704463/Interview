@@ -21,6 +21,8 @@
   <script src="${pageContext.request.contextPath}/statics/foreground/js/submitTopic.js"></script>
 </head>
 <body>
+<%--引入公用的头部--%>
+<jsp:include page="commonHeader.jsp"/>
 <main class="container">
   <h2 class="text-center text-primary">提交面试题</h2>
   <form class="submitTopic">

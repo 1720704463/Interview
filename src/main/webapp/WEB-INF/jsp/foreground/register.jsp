@@ -22,6 +22,8 @@
   <script src="${pageContext.request.contextPath}/statics/foreground/js/register.js"></script>
 </head>
 <body>
+<%--引入公用的头部--%>
+<jsp:include page="commonHeader.jsp"/>
 <main class="container">
   <div class="card card-login mx-auto mt-5 form-register">
     <h2 class="card-header text-primary text-center">用户注册</h2>

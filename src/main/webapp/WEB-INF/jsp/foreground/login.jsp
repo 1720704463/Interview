@@ -21,6 +21,8 @@
   <script src="${pageContext.request.contextPath}/statics/foreground/js/login.js"></script>
 </head>
 <body>
+<%--引入公用的头部--%>
+<jsp:include page="commonHeader.jsp"/>
 <div class="container">
   <div class="card card-login mx-auto mt-5 form-login">
     <h2 class="card-header text-primary text-center">用户登录</h2>

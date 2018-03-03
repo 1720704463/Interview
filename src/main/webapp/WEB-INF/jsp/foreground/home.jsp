@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: rxliuli
@@ -21,6 +22,8 @@
   <script src="${pageContext.request.contextPath}/statics/foreground/js/home.js"></script>
 </head>
 <body class="container">
+<%--引入公用的头部--%>
+<jsp:include page="commonHeader.jsp"/>
 <h1 class="text-center text-primary">面试题目列表</h1>
 <!--搜索和添加面试题目-->
 <form action="#">
