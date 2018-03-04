@@ -33,7 +33,6 @@
       <button class="btn btn-default" type="submit">
         <span class="glyphicon glyphicon-search"></span>
       </button>
-      <button class="btn btn-primary">新增</button>
     </div>
   </div>
 </form>
