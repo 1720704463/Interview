@@ -112,7 +112,7 @@ $(function () {
     });
 
     $.post({
-      url: "/user/submitUserTest",
+      url: rootContextPath + "/user/submitUserTest",
       dataType: "json",
       data: {
         topicListString: JSON.stringify(topicList),
