@@ -271,7 +271,7 @@ public class UserController {
       "用户测试 ",
       new Timestamp(nowTime),
       //一小时之后的时间
-      new Timestamp(nowTime + 60_000),
+      new Timestamp(nowTime + 3_600_000),
       topicIds
     );
     boolean boo = examService.insert(exam);
@@ -280,7 +280,7 @@ public class UserController {
     }
     Map<String, Object> map = new HashMap<>(2);
     map.put("topicList", topicList);
-    map.put("examId", exam.getId());
+    map.put("exam", exam);
     return JsonResult.getSuccess(map);
   }
 
@@ -314,5 +314,13 @@ public class UserController {
     removeUserCookie(request, response);
     session.removeAttribute(ConstantsUtil.USER_SESSION);
     return "redirect:/user/home";
+  }
+
+  /**
+   * 跳转到考试成绩列表页面
+   */
+  @RequestMapping(path = "/resultList")
+  public String resultList() {
+    return "foreground/resultList";
   }
 }
