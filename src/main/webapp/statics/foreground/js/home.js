@@ -2,7 +2,7 @@
  * @author rxliuli
  */
 $(function () {
-//第几页
+  //第几页
   var pageIndex = 1;
   //一页显示的学生信息数量
   var pageSize = 10;
@@ -15,7 +15,7 @@ $(function () {
   function changePage() {
     $.ajax({
       //请求的路径
-      url: "/getTopicListByParam",
+      url: rootContextPath + "/getTopicListByParam",
       //请求的类型
       type: "post",
       //返回数据的类型
@@ -33,6 +33,7 @@ $(function () {
           loadData(json.data)
         } else {
           alert(json.message);
+          location.reload();
         }
       },
       //失败后的回调函数
