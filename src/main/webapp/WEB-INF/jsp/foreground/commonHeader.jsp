@@ -72,6 +72,7 @@
           <ul class="dropdown-menu">
             <li><a href="#">帮助</a></li>
             <li><a href="#">反馈</a></li>
+            <li><a href="${pageContext.request.contextPath}/statics/foreground/resources/app/interviewBeta_1.0.apk">安卓下载</a></li>
           </ul>
         </li>
       </ul>
