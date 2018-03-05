@@ -18,7 +18,7 @@ public class GsonMessageConfig extends GsonHttpMessageConverter {
    */
   private static final Gson DEFAULT_GSON = new GsonBuilder()
     //null 也序列化
-    .serializeNulls()
+//    .serializeNulls()
     //时间转化为特定格式 yyyy-MM-dd HH:mm:ss
     .setDateFormat("yyyy-MM-dd hh:mm:ss")
     //设置 Long 类型自动转换成 String 类型
