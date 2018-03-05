@@ -2,10 +2,12 @@ package com.interview.web;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.interview.entity.Topic;
-import com.interview.entity.TopicType;
+import com.interview.entity.*;
+import com.interview.service.ExamService;
+import com.interview.service.ResultService;
 import com.interview.service.TopicService;
 import com.interview.service.TopicTypeService;
+import com.interview.util.ConstantsUtil;
 import com.interview.util.JsonResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author rxliuli
@@ -26,6 +31,10 @@ public class CommonRestController {
   private TopicService topicService;
   @Autowired
   private TopicTypeService topicTypeService;
+  @Autowired
+  private ResultService resultService;
+  @Autowired
+  private ExamService examService;
 
   /**
    * 根据标题模糊分页查询面试题列表
@@ -81,4 +90,38 @@ public class CommonRestController {
     return JsonResult.getSuccess(topicTypeService.selectList(new EntityWrapper<>()));
   }
 
+  /**
+   * 获取当前用户的考试列表
+   */
+  @RequestMapping(path = "/getResultList")
+  public JsonResult<Map<String, Object>> getResultList(
+    @RequestParam(required = false) Integer pageIndex,
+    @RequestParam(required = false) Integer pageSize,
+    @RequestParam(required = false) Long userLoginId,
+    HttpSession session
+  ) {
+    //如果没有传入用户编号,则查询当前 session 中的用户
+    if (userLoginId == null) {
+      //查询当前用户
+      UserLogin userLogin = (UserLogin) session.getAttribute(ConstantsUtil.USER_SESSION);
+      userLoginId = userLogin.getId();
+    }
+    //根据当前用户查询考试
+    Page<Result> resultPage = resultService.selectPage(
+      new Page<>(pageIndex, pageSize),
+      new EntityWrapper<Result>()
+        .eq("userLoginId", userLoginId)
+        .orderBy("examId", false)
+    );
+    List<Long> examIdList = resultPage.getRecords().stream()
+      .map(Result::getExamId)
+      .collect(Collectors.toList());
+    //根据考试编号查询考试的详细信息
+    List<Exam> examList = examService.selectBatchIds(examIdList);
+    Map<String, Object> map = new HashMap<>(2);
+    map.put("resultPage", resultPage);
+    map.put("examList", examList);
+
+    return JsonResult.getSuccess(map);
+  }
 }

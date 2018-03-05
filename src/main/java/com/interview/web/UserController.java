@@ -8,6 +8,7 @@ import com.interview.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -322,5 +323,15 @@ public class UserController {
   @RequestMapping(path = "/resultList")
   public String resultList() {
     return "foreground/resultList";
+  }
+
+  /**
+   * 跳转到考试结果详情页面
+   */
+  @RequestMapping(path = "/resultDetail/{resultId}")
+  public String resultDetail(
+    @PathVariable Long resultId
+  ) {
+    return "foreground/resultDetail";
   }
 }
