@@ -84,7 +84,7 @@ $(function () {
     var index = $(this).parents(".topic").index();
     //rxliuliError: 这里的下标貌似有些问题?
     if ($(this).val().trim() === '') {
-      $("#idList").find(".id").eq(index).removeClass("bg-info")
+      $("#idList").find(".id").eq(index - 1).removeClass("bg-info")
     } else {
       $("#idList").find(".id").eq(index - 1).addClass("bg-info")
     }
