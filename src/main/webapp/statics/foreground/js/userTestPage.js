@@ -81,13 +81,29 @@ $(function () {
    * 每填写一个面试题目就改变题目选项卡的颜色进行标识
    */
   $("body").on("input", ".answer", function () {
-    var index = $(this).parents(".topic").index();
+    answerChange.call(this);
+  });
+
+  /**
+   * 答案改变时进行判断并对按钮进行标识
+   */
+  function answerChange() {
+    var activeIndex = $(".id.active").index() - 1;
     //rxliuliError: 这里的下标貌似有些问题?
-    if ($(this).val().trim() === '') {
-      $("#idList").find(".id").eq(index - 1).removeClass("bg-info")
+    if ($("#topicList").find(".answer").eq(activeIndex).val().trim() === '') {
+      $("#idList").find(".id").eq(activeIndex).removeClass("bg-info")
     } else {
-      $("#idList").find(".id").eq(index - 1).addClass("bg-info")
+      $("#idList").find(".id").eq(activeIndex).addClass("bg-info")
     }
+  }
+
+  /**
+   * 点击清空就清空当前输入框的值
+   */
+  $(".submitUserTest :button").click(function () {
+    var activeIndex = $(".id.active").index() - 1;
+    $("#topicList").find(".answer").eq(activeIndex).val('');
+    answerChange();
   });
 
   /**
