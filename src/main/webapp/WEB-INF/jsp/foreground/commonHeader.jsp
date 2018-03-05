@@ -59,7 +59,7 @@
           </a>
           <ul class="dropdown-menu">
             <li><a href="${pageContext.request.contextPath}/user/userTestPage">进行考试</a></li>
-            <li><a href="#">查询考试</a></li>
+            <li><a href="${pageContext.request.contextPath}/user/resultList">考试结果列表</a></li>
           </ul>
         </li>
       </ul>
