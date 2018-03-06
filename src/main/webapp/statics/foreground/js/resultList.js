@@ -46,7 +46,7 @@ $(function () {
       $resultClone.find(".seeDetail").attr({
         href:
         rootContextPath
-        + "/user/resultDetail/"
+        + "/resultDetail/"
         + resultPage.records[index].id
       });
 
