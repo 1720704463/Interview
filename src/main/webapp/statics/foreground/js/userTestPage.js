@@ -100,7 +100,7 @@ $(function () {
   /**
    * 点击清空就清空当前输入框的值
    */
-  $(".submitUserTest :button").click(function () {
+  $(".submitUserTest button[type=button]").click(function () {
     var activeIndex = $(".id.active").index() - 1;
     $("#topicList").find(".answer").eq(activeIndex).val('');
     answerChange();
@@ -109,7 +109,7 @@ $(function () {
   /**
    * 用户点击提交按钮
    */
-  $(".submitUserTest :submit").click(function () {
+  $(".submitUserTest button[type=submit]").click(function () {
     /**
      * 创建一个原型
      */
