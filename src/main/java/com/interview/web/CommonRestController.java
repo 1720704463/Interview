@@ -3,12 +3,10 @@ package com.interview.web;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.interview.entity.*;
-import com.interview.service.ExamService;
-import com.interview.service.ResultService;
-import com.interview.service.TopicService;
-import com.interview.service.TopicTypeService;
+import com.interview.service.*;
 import com.interview.util.ConstantsUtil;
 import com.interview.util.JsonResult;
+import com.interview.util.TopicIdsUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +33,8 @@ public class CommonRestController {
   private ResultService resultService;
   @Autowired
   private ExamService examService;
+  @Autowired
+  private ExamTopicService examTopicService;
 
   /**
    * 根据标题模糊分页查询面试题列表
@@ -123,5 +123,42 @@ public class CommonRestController {
     map.put("examList", examList);
 
     return JsonResult.getSuccess(map);
+  }
+
+  /**
+   * 根据考试编号获取考试题目的对错,涉及到 Exam,Result,ExamTopic,Topic 4 个实体类
+   */
+  @RequestMapping(path = "/getExamTopicByResultId")
+  public JsonResult<List<Map<String, Object>>> getExamTopicByResultId(
+    @RequestParam(required = false) Long resultId
+  ) {
+    Result result = resultService.selectById(resultId);
+    Exam exam = examService.selectById(result.getExamId());
+    List<Long> topicIdList = TopicIdsUtil.splitToList(exam.getTopicIds());
+    //查询所有题目
+    List<Topic> topicList = topicService.selectBatchIds(topicIdList);
+    //查询所有用户的答案
+    List<ExamTopic> examTopicList = examTopicService.selectList(new EntityWrapper<ExamTopic>()
+      .eq("resultId", resultId)
+      .and("content != ''")
+      .orderBy("topicId", true)
+    );
+
+    List<Map<String, Object>> list = topicList.stream()
+      .map(topic -> {
+        ExamTopic examTopicTemp = examTopicList.stream()
+          .filter(examTopic -> examTopic.getTopicId().equals(topic.getId()))
+          .findFirst()
+          .orElse(null);
+        Map<String, Object> map = new HashMap<>(2);
+        map.put("topic", topic);
+        if (examTopicTemp != null && examTopicTemp.getContent() != null && !examTopicTemp.getContent().isEmpty()) {
+          map.put("examTopic", examTopicTemp);
+        }
+        return map;
+      })
+      .collect(Collectors.toList());
+
+    return JsonResult.getSuccess(list);
   }
 }

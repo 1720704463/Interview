@@ -1,6 +1,7 @@
 package com.interview.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -17,5 +18,15 @@ public class CommonController {
   @RequestMapping(path = "/")
   public String home() {
     return "redirect:/user/home";
+  }
+
+  /**
+   * 跳转到考试结果详情页面
+   */
+  @RequestMapping(path = "/resultDetail/{resultId}")
+  public String resultDetail(
+    @PathVariable Long resultId
+  ) {
+    return "foreground/resultDetail";
   }
 }
