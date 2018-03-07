@@ -153,4 +153,25 @@ $(function () {
   $updateUserLogin.find("button[type=button]").click(function () {
     loadDataUserLogin();
   });
+
+  /**
+   * 销毁账号
+   */
+  $("#removeUser").click(function () {
+    var isAffirm = confirm("请问确实要删除用户所有的信息么？\n(警告：此操作不可恢复)");
+    if (isAffirm) {
+      $.post({
+        url: "/user/removeUserAllInfo",
+        dataType: "json",
+        success: function (json) {
+          if (json.success) {
+            alert("删除用户成功！");
+            open(rootContextPath + "/user/home", "_self")
+          } else {
+            alert("删除用户失败！");
+          }
+        }
+      })
+    }
+  });
 });

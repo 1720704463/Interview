@@ -14,4 +14,9 @@ public interface UserLoginService extends IService<UserLogin> {
    * @return 用户登录对象
    */
   UserLogin getByUserLogin(UserLogin userLogin);
+
+  /**
+   * 删除用户的全部信息
+   */
+  boolean removeUserAllInfo(Long id);
 }

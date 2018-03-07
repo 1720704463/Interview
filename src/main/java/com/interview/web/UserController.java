@@ -386,5 +386,20 @@ public class UserController {
     return JsonResult.getSuccess(userLoginService.selectById(userLogin));
   }
 
+  @RequestMapping(path = "/removeUserAllInfo")
+  @ResponseBody
+  public JsonResult removeUserAllInfo(
+    HttpServletRequest request,
+    HttpServletResponse response,
+    HttpSession session
+  ) {
+    UserLogin userLogin = (UserLogin) session.getAttribute(ConstantsUtil.USER_SESSION);
+    boolean removeUserAllInfoBoo = userLoginService.removeUserAllInfo(userLogin.getId());
+    if (!removeUserAllInfoBoo) {
+      return JsonResult.getError("删除用户信息失败！");
+    }
+    logout(request, response, session);
+    return JsonResult.getSuccess(null);
+  }
 
 }

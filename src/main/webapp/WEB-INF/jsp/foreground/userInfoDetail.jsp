@@ -35,7 +35,7 @@
           <a href="#safety" data-toggle="tab">安全相关</a>
         </li>
         <li>
-          <a href="#" id="removeUserLogin" class="text-danger" data-toggle="tab">销毁账号</a>
+          <a href="#" id="removeUser" class="text-danger" data-toggle="tab">销毁账号</a>
         </li>
       </ul>
     </div>
