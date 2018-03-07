@@ -58,6 +58,9 @@ public class UserSessionInterceptor extends HandlerInterceptorAdapter {
     //根据 id 获取 userKey
     Long id = Long.valueOf(split[0]);
     UserKey userKey = userKeyService.selectById(id);
+    if (userKey == null) {
+      return true;
+    }
     //对密码解密
     String passwordCookie = DesCodec.decrypt(split[1], userKey.getUserKey());
     //获取用户
