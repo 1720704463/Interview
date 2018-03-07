@@ -324,4 +324,67 @@ public class UserController {
     return "foreground/resultList";
   }
 
+  /**
+   * 跳转到用户的详细信息页面
+   */
+  @RequestMapping(path = "/userInfoDetail")
+  public String userInfoDetail() {
+    return "/foreground/userInfoDetail";
+  }
+
+  /**
+   * 获取当前用户的信息
+   * 包括用户的登录信息(不包含密码)
+   * 用户的详细信息
+   */
+  @RequestMapping(path = "/getUserInfoDetail")
+  @ResponseBody
+  public JsonResult<Map<String, Object>> getUserInfoDetail(
+    HttpSession session
+  ) {
+    UserLogin userLogin = (UserLogin) session.getAttribute(ConstantsUtil.USER_SESSION);
+    userLogin.setPassword(null);
+    UserInfo userInfo = userInfoService.selectById(userLogin.getId());
+    Map<String, Object> map = new HashMap<>(2);
+    map.put("userLogin", userLogin);
+    map.put("userInfo", userInfo);
+    return JsonResult.getSuccess(map);
+  }
+
+  /**
+   * 修改用户的详细信息
+   */
+  @RequestMapping(path = "/updateUserInfo")
+  @ResponseBody
+  public JsonResult<UserInfo> updateUserInfo(
+    @RequestParam(required = false) String userInfoString
+  ) {
+    UserInfo userInfo = GsonUtil.gsonToBean(userInfoString, UserInfo.class);
+    boolean userInfoBoo = userInfoService.updateById(userInfo);
+    if (!userInfoBoo) {
+      return JsonResult.getError("更新用户失败!");
+    }
+    return JsonResult.getSuccess(userInfoService.selectById(userInfo.getId()));
+  }
+
+  /**
+   * 修改用户的登录信息
+   */
+  @RequestMapping(path = "/updateUserLogin")
+  @ResponseBody
+  public JsonResult<UserLogin> updateUserLogin(
+    @RequestParam(required = false) String userLoginString
+  ) {
+    UserLogin userLogin = GsonUtil.gsonToBean(userLoginString, UserLogin.class);
+    if (userLogin.getPassword() != null) {
+      userLogin.setPassword(EncryptUtil.sha512Hex(userLogin.getPassword()));
+    }
+    boolean userLoginBoo = userLoginService.updateById(userLogin);
+    if (!userLoginBoo) {
+      return JsonResult.getError("更新用户信息失败!");
+    }
+    return JsonResult.getSuccess(userLoginService.selectById(userLogin));
+  }
+
+
 }

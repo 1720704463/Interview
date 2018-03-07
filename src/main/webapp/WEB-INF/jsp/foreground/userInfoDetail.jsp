@@ -1,3 +1,11 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: rxliuli
+  Date: 2018/3/7
+  Time: 8:04
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang='zh-CN'>
 <head>
@@ -6,13 +14,14 @@
   <meta http-equiv='x-ua-compatible' content='ie=edge'>
   <title>用户详情</title>
   <!--引入 Bootstrap,jQuery 相关类库-->
-  <link href="/statics/commons/css/bootstrap.min.css" rel="stylesheet"/>
-  <script src="/statics/commons/js/jquery.min.js"></script>
-  <script src="/statics/commons/js/bootstrap.min.js"></script>
+  <link href="${pageContext.request.contextPath}/statics/commons/css/bootstrap.min.css" rel="stylesheet"/>
+  <script src="${pageContext.request.contextPath}/statics/commons/js/jquery.min.js"></script>
+  <script src="${pageContext.request.contextPath}/statics/commons/js/bootstrap.min.js"></script>
 
-  <script src="/statics/foreground/js/userTestPage.js"></script>
+  <script src="${pageContext.request.contextPath}/statics/foreground/js/userInfoDetail.js"></script>
 </head>
 <body>
+<jsp:include page="commonHeader.jsp"/>
 <main class="container">
   <h2 class="text-primary text-center">用户的详细信息</h2>
   <div class="container-fluid">
@@ -37,19 +46,21 @@
         <div class="tab-pane fade in active" id="userInfo">
           <form class="form-horizontal" id="updateUserInfo">
             <div class="form-group">
-              <label for="username">登录名：</label>
-              <input type="text" class="form-control" id="username"/>
-            </div>
-            <div class="form-group">
               <label for="nickname">昵称：</label>
               <input type="text" class="form-control" id="nickname"/>
             </div>
             <div class="form-group">
+              <label for="realname">真实姓名：</label>
+              <input type="text" class="form-control" id="realname"/>
+            </div>
+            <div class="form-group">
               <label>头像：</label>
               <!--suppress CheckImageSize -->
-              <img src="/statics/foreground/image/user/395227749440163840_pictureImage.jpg" width="30" height="30"
-                   class="img-circle"/>
-              <input type="file" id="picture"/>
+              <img
+                  src="${pageContext.request.contextPath}/statics/foreground/image/user/395227749440163840_pictureImage.jpg"
+                  width="30" height="30"
+                  class="img-circle" id="oldPicture"/>
+              <input type="file" id="newPicture"/>
               <p class="help-block">上传新的头像</p>
             </div>
             <div class="form-group">
@@ -60,13 +71,13 @@
               <label for="gender">性别：</label>
               <div id="gender">
                 <label class="radio-inline">
-                  <input type="radio" name="gender" value="0" checked> 男
+                  <input type="radio" name="gender" value="0"> 女
                 </label>
                 <label class="radio-inline">
-                  <input type="radio" name="gender" value="1"> 女
+                  <input type="radio" name="gender" value="1"> 男
                 </label>
                 <label class="radio-inline">
-                  <input type="radio" name="gender" value="1"> 保密
+                  <input type="radio" name="gender" value="-1"> 保密
                 </label>
               </div>
             </div>
@@ -89,6 +100,10 @@
         <!--安全相关-->
         <div class="tab-pane fade in" id="safety">
           <form class="form-horizontal" id="updateUserLogin">
+            <div class="form-group">
+              <label for="username">登录名：</label>
+              <input type="text" class="form-control" id="username"/>
+            </div>
             <div class="form-group">
               <label for="password">新的密码：</label>
               <input type="password" class="form-control" id="password"/>
