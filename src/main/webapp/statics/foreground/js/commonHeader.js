@@ -9,7 +9,6 @@ $(function () {
     success: function (json) {
       if (json.success) {
         //获取用户的 id 和头像路径
-        var id = json.data.id;
         var picture = json.data.picture;
         var $userAlreadyLogin = $("#userAlreadyLogin");
         var $userPictureImage = $userAlreadyLogin.find(".userPictureImage img");
@@ -57,4 +56,39 @@ function getScrollTop() {
  */
 function getScrollHeight() {
   return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+}
+
+/**
+ * 显示一个提醒
+ * @param f 对 alert 元素执行的操作
+ * @param container 要将提醒添加到哪个容器中
+ * @param closeTime 提醒自动关闭的时间
+ * @return 进行操作的 $alert jQuery 对象
+ */
+function showAlert(f, container, closeTime) {
+  //提示对象
+  var $alert = $(
+    "<div class='alert in fade'>\n" +
+    "  <button type='button' class='close' data-dismiss='alert'\n" +
+    "          aria-hidden='true'>\n" +
+    "    &times;\n" +
+    "  </button>\n" +
+    "  <span></span>\n" +
+    "</div>");
+  //执行你需要进行的操作
+  if (f !== undefined) {
+    f($alert);
+  }
+  //装配到容器中
+  if (container !== undefined) {
+    $(container).append($alert);
+  }
+  //设定关闭时间
+  if (closeTime !== undefined) {
+    setTimeout(function () {
+      $alert.alert("close");
+    }, closeTime);
+  }
+  //返回 alert 对象
+  return $alert;
 }
