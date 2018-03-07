@@ -10,10 +10,20 @@ public class Feedback extends BaseEntity {
   private Long userLoginId;
   private String content;
   private Timestamp feedbackTime;
-  private Byte haveSolve;
+  private Integer haveSolve;
   private Long adminId;
   private String solveMethod;
   private Timestamp solveTime;
+
+  public Feedback() {
+  }
+
+  public Feedback(Long userLoginId, String content, Timestamp feedbackTime, Integer haveSolve) {
+    this.userLoginId = userLoginId;
+    this.content = content;
+    this.feedbackTime = feedbackTime;
+    this.haveSolve = haveSolve;
+  }
 
   public Long getId() {
     return id;
@@ -47,11 +57,7 @@ public class Feedback extends BaseEntity {
     this.feedbackTime = feedbackTime;
   }
 
-  public Byte getHaveSolve() {
-    return haveSolve;
-  }
-
-  public void setHaveSolve(Byte haveSolve) {
+  public void setHaveSolve(Integer haveSolve) {
     this.haveSolve = haveSolve;
   }
 

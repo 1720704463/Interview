@@ -45,6 +45,8 @@ public class UserController {
   private UserInfoService userInfoService;
   @Autowired
   private UserPictureService userPictureService;
+  @Autowired
+  private FeedbackService feedbackService;
 
   /**
    * 跳转到登陆
@@ -386,6 +388,9 @@ public class UserController {
     return JsonResult.getSuccess(userLoginService.selectById(userLogin));
   }
 
+  /**
+   * 移除用户的全部信息
+   */
   @RequestMapping(path = "/removeUserAllInfo")
   @ResponseBody
   public JsonResult removeUserAllInfo(
@@ -402,4 +407,37 @@ public class UserController {
     return JsonResult.getSuccess(null);
   }
 
+  /**
+   * 跳转到用户反馈页面
+   */
+  @RequestMapping(path = "/submitFeedback")
+  public String submitFeedback() {
+    return "foreground/submitFeedback";
+  }
+
+  /**
+   * 提交用户反馈
+   */
+  @RequestMapping(path = "/submitFeedbackExecute")
+  @ResponseBody
+  public JsonResult<Feedback> submitFeedbackExecute(
+    @RequestParam(required = false) String content,
+    HttpSession session
+  ) {
+    if (StringUtils.isBlank(content)) {
+      return JsonResult.getError("反馈内容不能为空！");
+    }
+    UserLogin userLogin = (UserLogin) session.getAttribute(ConstantsUtil.USER_SESSION);
+    Feedback feedback = new Feedback(
+      userLogin.getId(),
+      content,
+      new Timestamp(System.currentTimeMillis()),
+      0
+    );
+    boolean feedbackBoo = feedbackService.insert(feedback);
+    if (!feedbackBoo) {
+      return JsonResult.getError("发送反馈失败，请重新尝试！");
+    }
+    return JsonResult.getSuccess(null);
+  }
 }
