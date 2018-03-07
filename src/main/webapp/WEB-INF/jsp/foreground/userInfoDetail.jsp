@@ -124,14 +124,6 @@
             </div>
           </form>
         </div>
-        <!--下面的提示-->
-        <div class="alert in fade hide alertPrototype">
-          <button type="button" class="close" data-dismiss="alert"
-                  aria-hidden="true">
-            &times;
-          </button>
-          <span></span>
-        </div>
       </div>
     </div>
   </div>
