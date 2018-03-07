@@ -93,12 +93,17 @@ $(function () {
         userInfoString: JSON.stringify(newUserInfo)
       },
       success: function (json) {
-        if (json.success) {
-          userInfo = json.data;
-        } else {
-          alert(json.message);
-        }
-        loadDataUserInfo();
+        showAlert(function ($alert) {
+          if (json.success) {
+            userInfo = json.data;
+            $alert.addClass("alert-success")
+              .find("span").html("更新用户信息成功！");
+            loadDataUserInfo();
+          } else {
+            $alert.addClass("alert-danger")
+              .find("span").html(json.message);
+          }
+        }, "main", 3000);
       }
     });
 
@@ -133,13 +138,18 @@ $(function () {
         userLoginString: JSON.stringify(newUserLogin)
       },
       success: function (json) {
-        if (json.success) {
-          userLogin = json.data;
-          userLogin.password = null;
-        } else {
-          alert(json.message)
-        }
-        loadDataUserLogin();
+        showAlert(function ($alert) {
+          if (json.success) {
+            userLogin = json.data;
+            userLogin.password = null;
+            $alert.addClass("alert-success")
+              .find("span").html("更新用户信息成功！");
+            loadDataUserLogin();
+          } else {
+            $alert.addClass("alert-danger")
+              .find("span").html(json.message);
+          }
+        }, "main", 3000);
       }
     });
 
@@ -164,14 +174,27 @@ $(function () {
         url: "/user/removeUserAllInfo",
         dataType: "json",
         success: function (json) {
+          var $alertPropertyClone = $(" main .alertPrototype").clone(true)
+            .attr({
+              class: "alert in fade alert"
+            });
           if (json.success) {
-            alert("删除用户成功！");
-            open(rootContextPath + "/user/home", "_self")
+            $alertPropertyClone.addClass("alert-success")
+              .find("span").html("删除用户成功，即将跳转到首页！");
+            setTimeout(function () {
+              open(rootContextPath + "/user/home", "_self")
+            }, 3000);
           } else {
-            alert("删除用户失败！");
+            $alertPropertyClone.addClass("alert-success")
+              .find("span").html(json.message);
           }
+          //3s 后自动关闭
+          setTimeout(function () {
+            $alertPropertyClone.alert("close");
+          }, 3000);
         }
       })
     }
   });
+
 });
