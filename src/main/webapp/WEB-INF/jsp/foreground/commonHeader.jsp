@@ -101,8 +101,8 @@
             <!--<b class="caret"></b>-->
           </a>
           <ul class="dropdown-menu">
-            <li><a href="#">用户信息</a></li>
-            <li><a href="${pageContext.request.contextPath}/user/userInfoDetail">注销登陆</a></li>
+            <li><a href="${pageContext.request.contextPath}/user/userInfoDetail">个人中心</a></li>
+            <li><a href="${pageContext.request.contextPath}/user/logout">注销登陆</a></li>
           </ul>
         </li>
       </ul>
