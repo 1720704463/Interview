@@ -93,6 +93,14 @@ public class MPServiceAspect {
   }
 
 
+  /**
+   * 一个封装 AOP 的封装方法
+   * 简化 AOP 增强的代码
+   *
+   * @param proceedingJoinPoint   切入方法的信息
+   * @param throwableReturnObject 发生异常时的返回值对象
+   * @return 正常执行时返回切入方法的返回值, 否则返回传入的异常返回值对象
+   */
   private Object using(ProceedingJoinPoint proceedingJoinPoint, Object throwableReturnObject) {
     try {
       //执行方法获取返回值
