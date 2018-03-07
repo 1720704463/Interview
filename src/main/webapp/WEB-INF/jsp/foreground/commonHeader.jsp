@@ -72,7 +72,9 @@
           <ul class="dropdown-menu">
             <li><a href="#">帮助</a></li>
             <li><a href="#">反馈</a></li>
-            <li><a href="${pageContext.request.contextPath}/statics/foreground/resources/app/interviewBeta_1.0.apk">安卓下载</a></li>
+            <li><a
+                href="${pageContext.request.contextPath}/statics/foreground/resources/app/interviewBeta_1.0.apk">安卓下载</a>
+            </li>
           </ul>
         </li>
       </ul>
@@ -100,7 +102,7 @@
           </a>
           <ul class="dropdown-menu">
             <li><a href="#">用户信息</a></li>
-            <li><a href="${pageContext.request.contextPath}/user/logout">注销登陆</a></li>
+            <li><a href="${pageContext.request.contextPath}/user/userInfoDetail">注销登陆</a></li>
           </ul>
         </li>
       </ul>
