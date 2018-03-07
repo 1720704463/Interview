@@ -94,6 +94,12 @@
       <mvc:mapping path="/user/userTestPage"/>
       <mvc:mapping path="/user/submitUserTest"/>
       <mvc:mapping path="/user/addExamUserTest"/>
+      <!--用户个人中心-->
+      <mvc:mapping path="/user/userInfoDetail"/>
+      <mvc:mapping path="/user/getUserInfoDetail"/>
+      <mvc:mapping path="/user/updateUserInfo"/>
+      <mvc:mapping path="/user/updateUserLogin"/>
+      <mvc:mapping path="/user/removeUserAllInfo"/>
 
       <!--进行处理的拦截器-->
       <bean class="com.interview.interceptor.UserNoLoginInterceptor"/>
