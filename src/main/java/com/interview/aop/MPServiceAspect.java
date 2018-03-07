@@ -20,7 +20,7 @@ public class MPServiceAspect {
   /**
    * log4j 的 一个 logger 日志对象
    */
-  private static final Log logger = LogFactory.getLog(ServiceAop.class);
+  private static final Log logger = LogFactory.getLog(MPServiceAspect.class);
 
   /**
    * 定义增删改的切点
