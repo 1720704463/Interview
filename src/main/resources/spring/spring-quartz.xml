@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+  <bean name="jobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <!--实现Job接口的任务类-->
+    <property name="jobClass" value="com.interview.quartz.SimpleJob"/>
+    <!--设置一个键，将Spring的ApplicationContext的引用保存到JobDataMap中，以便在Job的代码中访问-->
+    <property name="applicationContextJobDataKey" value="applicationContext"/>
+    <!--为任务所对应的JobDataMap提供值-->
+    <property name="jobDataAsMap">
+      <map>
+        <entry key="size" value="10"/>
+      </map>
+    </property>
+  </bean>
+
+  <bean id="sampleDetailJob" class="com.interview.quartz.SimpleJob"/>
+
+  <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+    <!--对应的JobDetail-->
+    <property name="jobDetail" ref="jobDetail"/>
+    <property name="startDelay" value="1000"/>
+    <!--<property name="repeatCount" value="100"/>-->
+    <property name="repeatInterval" value="2000"/>
+    <!--
+        <property name="jobDataAsMap">
+          <map>
+            <entry key="count" value="10"/>
+          </map>
+        </property>
+    -->
+  </bean>
+  <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <!--初始化完成后，延迟10秒启动，默认是0，立即启动，一般情况下，延迟一小段时间启动，以便Spring可以初始化剩余的Bean-->
+    <property name="startupDelay" value="10"/>
+    <!--配置多个trigger-->
+    <property name="triggers">
+      <list>
+        <ref bean="simpleTrigger"/>
+      </list>
+    </property>
+    <property name="schedulerContextAsMap">
+      <map>
+        <entry key="timeout" value="30"/>
+      </map>
+    </property>
+    <!--Quartz本身有一个默认的配置文件，也可以自己设置自定义的Quartz的配置文件覆盖默认的-->
+    <property name="configLocation" value="classpath:quartz.properties"/>
+  </bean>
+</beans>
