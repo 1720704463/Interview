@@ -175,7 +175,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context-support</artifactId>
-      <version>4.3.12.RELEASE</version>
+      <version>${spring.version}</version>
     </dependency>
 
   </dependencies>
@@ -195,9 +195,16 @@
         <artifactId>commons-collections</artifactId>
         <version>3.2.2</version>
       </dependency>
+      <!--slf4j-api 日志-->
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.25</version>
+      </dependency>
 
     </dependencies>
   </dependencyManagement>
+
   <build>
     <finalName>Interview</finalName>
 
