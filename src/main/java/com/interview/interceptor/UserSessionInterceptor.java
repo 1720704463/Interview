@@ -64,9 +64,9 @@ public class UserSessionInterceptor extends HandlerInterceptorAdapter {
     //对密码解密
     String passwordCookie = DesCodec.decrypt(split[1], userKey.getUserKey());
     //获取用户
-    UserLogin userLogin = userLoginService.selectById(id);
+    UserLogin userLogin = userLoginService.getByIdAndPassword(id, passwordCookie);
     //如果密码正确则将该用户保存到 session 中
-    if (StringUtils.equals(userLogin.getPassword(), passwordCookie)) {
+    if (userLogin != null) {
       session.setAttribute(ConstantsUtil.USER_SESSION, userLogin);
     }
     return true;
