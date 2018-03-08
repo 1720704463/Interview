@@ -7,6 +7,7 @@ import com.interview.entity.*;
 import com.interview.service.UserLoginService;
 import com.interview.util.EncryptUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +36,12 @@ public class UserLoginServiceImpl extends ServiceImpl<UserLoginMapper, UserLogin
   public UserLogin getByUserLogin(UserLogin userLogin) {
     userLogin.setPassword(EncryptUtil.sha512Hex(userLogin.getPassword()));
     return baseMapper.selectOne(userLogin);
+  }
+
+  @Override
+  @Cacheable(key = "#id", value = "sessionUserLoginList")
+  public UserLogin getByIdAndPassword(Long id, String password) {
+    return baseMapper.findByIdAndPassword(id, password);
   }
 
   @Override

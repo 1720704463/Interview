@@ -8,4 +8,9 @@
     WHERE
       (username = #{username} OR email = #{email}) AND password = #{password}
   </select>
+  <select id="findByIdAndPassword" resultType="com.interview.entity.UserLogin">
+    SELECT *
+    FROM user_login
+    WHERE id = #{id} AND password = #{password}
+  </select>
 </mapper>

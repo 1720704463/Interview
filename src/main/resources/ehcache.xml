@@ -16,7 +16,7 @@
     <persistence strategy="localTempSwap"/>
   </defaultCache>
 
-  <cache name="userCache"
+  <cache name="sessionUserLoginList"
          maxElementsInMemory="1000"
          timeToIdleSeconds="3"
          timeToLiveSeconds="3"

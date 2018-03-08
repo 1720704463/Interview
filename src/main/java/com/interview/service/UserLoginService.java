@@ -16,6 +16,15 @@ public interface UserLoginService extends IService<UserLogin> {
   UserLogin getByUserLogin(UserLogin userLogin);
 
   /**
+   * 根据用户 id 和密码查询用户
+   *
+   * @param id       用户 id
+   * @param password 用户密码
+   * @return 查询到的用户, 没有查询到则返回 null
+   */
+  UserLogin getByIdAndPassword(Long id, String password);
+
+  /**
    * 删除用户的全部信息
    */
   boolean removeUserAllInfo(Long id);
