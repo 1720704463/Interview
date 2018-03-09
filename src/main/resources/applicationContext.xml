@@ -8,4 +8,5 @@
   <import resource="classpath:spring/spring-dao.xml"/>
   <import resource="classpath:spring/spring-service.xml"/>
   <import resource="classpath:spring/spring-web.xml"/>
+  <import resource="classpath:spring/spring-mail.xml"/>
 </beans>
