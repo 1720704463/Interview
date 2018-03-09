@@ -34,17 +34,7 @@ public class MPServiceAspect {
    */
   @Around("updatePointcut()")
   public Object updateAround(ProceedingJoinPoint proceedingJoinPoint) {
-    try {
-      //执行方法获取返回值
-      return proceedingJoinPoint.proceed();
-    } catch (Throwable throwable) {
-      //想获取类，方法
-      Object target = proceedingJoinPoint.getTarget();
-      String name = proceedingJoinPoint.getSignature().getName();
-      logger.info("环绕增强，方法出现异常！");
-      logger.error("调用 " + target + " 的 " + name + " 方法发生异常：" + throwable);
-      return false;
-    }
+    return using(proceedingJoinPoint, false);
   }
 
   /**
