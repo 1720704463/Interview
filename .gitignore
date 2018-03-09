@@ -15,3 +15,6 @@ test/
 ~$_Java工程师_王凯_13939621143.docx
 
 阿里巴巴Java开发手册（纪念版）.pdf
+
+#忽略用户的头像
+/statics/foreground/image/user
