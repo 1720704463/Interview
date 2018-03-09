@@ -438,6 +438,6 @@ public class UserController {
     if (!feedbackBoo) {
       return JsonResult.getError("发送反馈失败，请重新尝试！");
     }
-    return JsonResult.getSuccess(null);
+    return JsonResult.getSuccess(feedback);
   }
 }
